@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <style>
+	.main-wrapper {
+	  height: 75vh;  
+	}
+	.col-example {
+      border: 10px solid #fff;
+	  border-radius: 1rem;
+      color: #fff;
+      text-align: center;
+    }
+  </style>
+
+    <meta charset="utf-8">
+	<meta http-equiv="refresh" content="60">
+    <title>Main Monitoring System</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+ 
+  </head>
+  <body>
+
+	<nav class="navbar navbar-dark bg-dark">
+		<a class="navbar-brand" href="#">
+		  <img src="" width="30" height="30" class="d-inline-block align-top" alt="">
+		  DC Monitoring
+		</a>
+	</nav>
+
+	<div class="main-wrapper d-flex justify-content-center">
+		<div class="d-flex align-items-center justify-content-center w-100">			
+
+			<div class="bg-success text-light h-25 w-50 col-example">
+				<div class="">
+					<div class="computer-room"> MM </div>
+					<div class="temp"> {{ MM_temp }}° </div>
+					<div class="temp"> {{ MM_timestamp }} </div>
+				</div>
+			</div>
+	
+			<div class="bg-danger text-light h-25 w-50 col-example">
+				<div class="card-main">
+					<div class="computer-room"> Labs </div>
+					<div class="temp"> {{ Labs_temp }}° </div>
+					<div class="temp"> {{ Labs_timestamp }} </div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+  </body>
+</html>
