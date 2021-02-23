@@ -1,5 +1,6 @@
 # import main Flask class and request object
 from flask import Flask, request, render_template
+import requests
 # create the Flask app
 app = Flask(__name__)
 
