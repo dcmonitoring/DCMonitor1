@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 TEMP_THRESHOLD = "25"
 TELEGRAM_BOT_TOKEN = '1114209977:AAFJg8EbEXg43DRPAC6xg8_mf07sxu2ks8Q'
-CHAT_ID = "gimelm
+CHAT_ID = "gimelm"
 
 rooms = {"MM": {"temp": "", "timestamp": "", "color": ""}, "Labs": {"temp": "", "timestamp": "", "color": ""}}
 
