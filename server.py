@@ -1,11 +1,9 @@
 # import main Flask class and request object
 from flask import Flask, request, render_template
-
-
-rooms = {"MM": {"temp": "", "timestamp": "", "color": ""}, "Labs": {"temp": "", "timestamp": "", "color": ""}}
-
 # create the Flask app
 app = Flask(__name__)
+
+rooms = {"MM": {"temp": "", "timestamp": "", "color": ""}, "Labs": {"temp": "", "timestamp": "", "color": ""}}
 
 @app.route('/', methods=['GET', 'POST'])
 def update_data():
@@ -13,10 +11,15 @@ def update_data():
     if request.method == 'POST':
         request_data = request.get_json()
         
-        ##computer_room = request_data['computer_room']
         rooms[request_data['computer_room']]["temp"] = request_data['temp']
         rooms[request_data['computer_room']]["timestamp"] = request_data['timestamp']
-        rooms[request_data['computer_room']]["color"] = request_data['color']
+        #rooms[request_data['computer_room']]["color"] = request_data['color']
+
+        for computer_room in rooms:
+            if rooms[computer_room]["temp"] < 25:
+                rooms[computer_room]["color"] = "bg-success"
+            else:
+               rooms[computer_room]["color"] = "bg-danger"  
 
         print(rooms)
 
