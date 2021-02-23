@@ -2,7 +2,7 @@
 from flask import Flask, request, render_template
 
 
-rooms = {"MM": {"temp": "", "timestamp": ""}, "Labs": {"temp": "", "timestamp": ""}}
+rooms = {"MM": {"temp": "", "timestamp": "", "color": ""}, "Labs": {"temp": "", "timestamp": "", "color": ""}}
 
 # create the Flask app
 app = Flask(__name__)
@@ -16,6 +16,7 @@ def update_data():
         ##computer_room = request_data['computer_room']
         rooms[request_data['computer_room']]["temp"] = request_data['temp']
         rooms[request_data['computer_room']]["timestamp"] = request_data['timestamp']
+        rooms[request_data['computer_room']]["color"] = request_data['color']
 
         print(rooms)
 
@@ -25,10 +26,8 @@ def update_data():
         return render_template('chiller.html',
                             Labs_temp=rooms["Labs"]["temp"],
                             Labs_timestamp=rooms["Labs"]["timestamp"],
+                            Labs_color=rooms["Labs"]["color"],
                             MM_temp=rooms["MM"]["temp"],
-                            MM_timestamp=rooms["MM"]["timestamp"]
+                            MM_timestamp=rooms["MM"]["timestamp"],
+                            MM_color=rooms["MM"]["color"]
                             )
-
-if __name__ == '__main__':
-    # run app in debug mode on port 5000
-    app.run(debug=True, port=5000)
