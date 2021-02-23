@@ -3,6 +3,7 @@ from flask import Flask, request, render_template
 # create the Flask app
 app = Flask(__name__)
 
+TEMP_THRESHOLD = "25"
 rooms = {"MM": {"temp": "", "timestamp": "", "color": ""}, "Labs": {"temp": "", "timestamp": "", "color": ""}}
 
 @app.route('/', methods=['GET', 'POST'])
@@ -16,7 +17,7 @@ def update_data():
         #rooms[request_data['computer_room']]["color"] = request_data['color']
 
         for computer_room in rooms:
-            if rooms[computer_room]["temp"] < 25:
+            if rooms[computer_room]["temp"] < TEMP_THRESHOLD:
                 rooms[computer_room]["color"] = "bg-success"
             else:
                rooms[computer_room]["color"] = "bg-danger"  
