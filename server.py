@@ -4,7 +4,15 @@ from flask import Flask, request, render_template
 app = Flask(__name__)
 
 TEMP_THRESHOLD = "25"
+TELEGRAM_BOT_TOKEN = '1114209977:AAFJg8EbEXg43DRPAC6xg8_mf07sxu2ks8Q'
+CHAT_ID = "gimelm"
+
 rooms = {"MM": {"temp": "", "timestamp": "", "color": ""}, "Labs": {"temp": "", "timestamp": "", "color": ""}}
+
+#notifies telegram on high temps in computer rooms
+def notify_telegram(computer_room, temp):
+    requests.get("https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendmessage?chat_id=@" + CHAT_ID + "&text=Alert! Temperature is too high:\r\n " + computer_room + ": " + temp)
+    #print("HIGH TEMP in " + computer_room + ": " + high_temps)
 
 @app.route('/', methods=['GET', 'POST'])
 def update_data():
@@ -20,7 +28,8 @@ def update_data():
             if rooms[computer_room]["temp"] < TEMP_THRESHOLD:
                 rooms[computer_room]["color"] = "bg-success"
             else:
-               rooms[computer_room]["color"] = "bg-danger"  
+               rooms[computer_room]["color"] = "bg-danger"
+               notify_telegram(computer_room, rooms[computer_room]["temp"])  
 
         print(rooms)
 
