@@ -18,7 +18,7 @@ def notify_telegram(computer_room, temps):
         temps_str += "Sensor" + i + ": " + temp + "\r\n"
         i += 1
 
-    requests.get("https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendmessage?chat_id=@" + CHAT_ID + "&text=Alert! Temperature in " + computer_room " is too high:\r\n " + temps_str)
+    requests.get("https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendmessage?chat_id=@" + CHAT_ID + "&text=Alert! Temperature in " + computer_room + " is too high:\r\n " + temps_str)
 
 @app.route('/', methods=['GET', 'POST'])
 def update_data():
