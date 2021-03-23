@@ -12,23 +12,23 @@ rooms = {"MM": {"temp": "", "timestamp": "", "color": ""}, "Labs": {"temp": "", 
 
 #notifies telegram on high temps in computer rooms
 def notify_telegram(computer_room, temp):
-    requests.get("https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendmessage?chat_id=@" + CHAT_ID + "&text=Alert! Temperature is too high:\r\n " + computer_room + ": " + temp)
+    requests.get("https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendmessage?chat_id=@" + CHAT_ID + "&text=Alert! Temperature is too high:\r\n " + computer_room + ": " + str(temp))
 
 @app.route('/', methods=['GET', 'POST'])
 def update_data():
     global rooms
     if request.method == 'POST':
         request_data = request.get_json()
+        computer_room = request_data['computer_room']
         
-        rooms[request_data['computer_room']]["temp"] = request_data['temp']
-        rooms[request_data['computer_room']]["timestamp"] = request_data['timestamp']
+        rooms[computer_room]["temp"] = request_data['temp']
+        rooms[computer_room]["timestamp"] = request_data['timestamp']
 
-        for computer_room in rooms:
-            if rooms[computer_room]["temp"] < TEMP_THRESHOLD:
-                rooms[computer_room]["color"] = "bg-success"
-            else:
-               rooms[computer_room]["color"] = "bg-danger"
-               notify_telegram(computer_room, rooms[computer_room]["temp"])
+        if any(temp > TEMP_THRESHOLD for temp in rooms[computer_room]["temp"]):
+            rooms[computer_room]["color"] = "bg-danger"
+            notify_telegram(computer_room, rooms[computer_room]["temp"])
+        else:
+            rooms[computer_room]["color"] = "bg-success"
 
         print(rooms)
 
@@ -36,7 +36,8 @@ def update_data():
     
     else:
         return render_template('chiller.html',
-                            Labs_temp=rooms["Labs"]["temp"],
+                            Labs_temp1=rooms["Labs"]["temp"][0],
+                            Labs_temp2=rooms["Labs"]["temp"][1],
                             Labs_timestamp=rooms["Labs"]["timestamp"],
                             Labs_color=rooms["Labs"]["color"],
                             MM_temp=rooms["MM"]["temp"],
