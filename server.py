@@ -12,6 +12,7 @@ rooms = {"MM": {"temp": "", "timestamp": "", "color": ""}, "Labs": {"temp": [], 
 
 #notifies telegram on high temps in computer rooms
 def notify_telegram(computer_room, temps):
+    temp_str = ""
     i = 1
     for temp in temps:
         temps_str += "Sensor" + i + ": " + temp + "\r\n"
