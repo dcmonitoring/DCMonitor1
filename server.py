@@ -11,8 +11,13 @@ CHAT_ID = "gimelm"
 rooms = {"MM": {"temp": "", "timestamp": "", "color": ""}, "Labs": {"temp": [], "timestamp": "", "color": ""}}
 
 #notifies telegram on high temps in computer rooms
-def notify_telegram(computer_room, temp):
-    requests.get("https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendmessage?chat_id=@" + CHAT_ID + "&text=Alert! Temperature is too high:\r\n " + computer_room + ": " + str(temp))
+def notify_telegram(computer_room, temps):
+    i = 1
+    for temp in temps:
+        temps_str += "Sensor" + i ": " + temp +"\r\n"
+        i += 1
+
+    requests.get("https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendmessage?chat_id=@" + CHAT_ID + "&text=Alert! Temperature in " + computer_room " is too high:\r\n " + temps_str)
 
 @app.route('/', methods=['GET', 'POST'])
 def update_data():
