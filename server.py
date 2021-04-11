@@ -49,6 +49,6 @@ def update_data():
                             Gimel_temp1=rooms["Gimel"]["temp"][0],
                             Gimel_temp2=rooms["Gimel"]["temp"][1],
                             Gimel_temp3=rooms["Gimel"]["temp"][2],
-                            Gimel_timestamp=rooms["MM"]["timestamp"],
-                            Gimel_color=rooms["MM"]["color"]
+                            Gimel_timestamp=rooms["Gimel"]["timestamp"],
+                            Gimel_color=rooms["Gimel"]["color"]
                             )                 
