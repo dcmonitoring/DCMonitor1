@@ -8,7 +8,7 @@ TEMP_THRESHOLD = "25"
 TELEGRAM_BOT_TOKEN = '1114209977:AAFJg8EbEXg43DRPAC6xg8_mf07sxu2ks8Q'
 CHAT_ID = "gimelm"
 
-rooms = {"Gimel": {"temp": ["", "", ""], "timestamp": "", "color": ""}, "Labs": {"temp": ["", ""], "timestamp": "", "color": ""}}
+rooms = {"Gimel": {"temp": ["", "", ""], "timestamp": "", "color": ""}, "Labs": {"temp": ["", ""], "timestamp": "", "color": ""}, "Messer": {"temp": ["", ""], "timestamp": "", "color": ""}}
 
 #notifies telegram on high temps in computer rooms
 def notify_telegram(computer_room, temps):
@@ -46,6 +46,10 @@ def update_data():
                             Labs_temp2=rooms["Labs"]["temp"][1],
                             Labs_timestamp=rooms["Labs"]["timestamp"],
                             Labs_color=rooms["Labs"]["color"],
+                            Messer_temp1=rooms["Messer"]["temp"][0],
+                            Messer_temp2=rooms["Messer"]["temp"][1],
+                            Messer_timestamp=rooms["Messer"]["timestamp"],
+                            Messer_color=rooms["Messer"]["color"],
                             Gimel_temp1=rooms["Gimel"]["temp"][0],
                             Gimel_temp2=rooms["Gimel"]["temp"][1],
                             Gimel_temp3=rooms["Gimel"]["temp"][2],
