@@ -16,10 +16,9 @@ class Room:
         self.color = Color
 
 rooms = {
-    "Gimel": Room("Gimel",[16,26,23],"14/6/2020","red"),
-    "Labs": Room("Labs",[18,21],"14/6/2021","green"),
-    "Black-Messer": Room("Black-Messer",[15,24],"Gilad Is The King Of The UI"),
-    "Sivan": Room(),
+    "Gimel": Room(),
+    "Labs": Room(),
+    "Messer": Room(),
 }
 
 #rooms = {
