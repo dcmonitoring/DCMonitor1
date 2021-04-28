@@ -39,8 +39,9 @@ def update_data():
         computer_room = request_data['computer_room']
         if computer_room not in rooms.keys():
             rooms[computer_room] = Room()
-        rooms[computer_room].timestamp = "check-me"
+        
         rooms[computer_room].name = computer_room
+        rooms[computer_room].timestamp = "check-me"
         rooms[computer_room].temps = [int(te) for te in request_data['temp']]
 
         rooms[computer_room].timestamp = request_data#['timestamp']
