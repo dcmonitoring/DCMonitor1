@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <style>
+
+
+  </style>
+
+  <meta charset="utf-8">
+  <meta http-equiv="refresh" content="60">
+  <title>Main Monitoring System</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+<body>
+
+	<nav class="navbar navbar-light bg-light">
+		<div class="container-fluid justify-content-center">
+			<a class="navbar-brand" href="#">
+				<img src="/static/Monitor-Logo.png" alt="" width="300" height="70">
+			</a>
+		</div>
+	</nav>
+ 
+	<div class="main-wrapper d-flex justify-content-center">
+		<div class="d-flex align-items-center justify-content-center w-100">	
+            {% for room_name,room in rooms.items() %}
+			<div class="DC text-dark h-40 w-50 col-example m-2 DC-{{room.color}}" >
+				<div >
+					<div class="computer-room"> {{room_name}} </div>
+                    {% if room.temps|length != 0 %}
+                    <div class="temps d-flex justify-content-center" style="font-size: {{4.8/(room.temps|length)}}vw">
+                    {% for temp in room.temps %}
+					    <div class="temp m-1">
+                            {% if temp >= ts.TEMP_HOT_THRESHOLD %}
+                            <img src="/static/gauge-hot.png" class="gauge-image" >
+                            {% elif temp >= ts.TEMP_MID_HOT_THRESHOLD %}
+                            <img src="/static/gauge-med-hot.png" class="gauge-image" >
+                            {% elif temp <= ts.TEMP_COLD_THRESHOLD %}
+                            <img src="/static/gauge-cold.png" class="gauge-image" >
+                            {% elif temp <= ts.TEMP_MID_COLD_THRESHOLD %}
+                            <img src="/static/gauge-med-cold.png" class="gauge-image" >
+                            {% else %}
+                            <img src="/static/gauge-med.png" class="gauge-image" >
+                            {% endif %}
+                            
+                            
+                            
+                            <div class="temp-number">
+                                {{ temp }}
+                            </div> 
+                        </div>
+                    {% endfor %}
+                    </div>
+                    {% endif %}
+					<div class="temp timestamp m-3"> Last Update: {{ room.timestamp }} </div>
+				</div>
+			</div>
+            {% endfor %}
+		</div>
+	</div>
+
+</body>
+</html>

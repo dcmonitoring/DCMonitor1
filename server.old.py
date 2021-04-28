@@ -8,23 +8,7 @@ TEMP_THRESHOLD = "25"
 TELEGRAM_BOT_TOKEN = '1114209977:AAFJg8EbEXg43DRPAC6xg8_mf07sxu2ks8Q'
 CHAT_ID = "gimelm"
 
-class Room:
-    def __init__(self,Name="undefined",Temps=[],Timestamp="undefined",Color="unknown"):
-        self.name=Name
-        self.temps = Temps
-        self.timestamp = Timestamp
-        self.color = Color
-
-rooms = {
-    "Gimel": Room("Gimel",[16,26,23],"14/6/2020","red"),
-    "Labs": Room("Labs",[18,21],"14/6/2021","green"),
-    "Black-Messer": Room("Black-Messer",[15,24],"Gilad Is The King Of The UI"),
-    "Sivan": Room(),
-}
-
-#rooms = {
-#    "Gimel": {
-#        "temp": [], "timestamp": "", "color": ""}, "Labs": {"temp": ["", ""], "timestamp": "", "color": ""}, "Messer": {"temp": ["", ""], "timestamp": "", "color": ""}}
+rooms = {"Gimel": {"temp": ["", "", ""], "timestamp": "", "color": ""}, "Labs": {"temp": ["", ""], "timestamp": "", "color": ""}, "Messer": {"temp": ["", ""], "timestamp": "", "color": ""}}
 
 #notifies telegram on high temps in computer rooms
 def notify_telegram(computer_room, temps):
@@ -43,29 +27,20 @@ def update_data():
         request_data = request.get_json()
         computer_room = request_data['computer_room']
         
-        rooms[computer_room].name = computer_room
-        rooms[computer_room].temps = request_data['temp']
-        rooms[computer_room].timestamp = request_data['timestamp']
+        rooms[computer_room]["temp"] = request_data['temp']
+        rooms[computer_room]["timestamp"] = request_data['timestamp']
 
-        if any(temp > TEMP_THRESHOLD for temp in rooms[computer_room].temp):
-            rooms[computer_room].color = "bg-danger"
-            notify_telegram(computer_room, rooms[computer_room].temp)
+        if any(temp > TEMP_THRESHOLD for temp in rooms[computer_room]["temp"]):
+            rooms[computer_room]["color"] = "bg-danger"
+            notify_telegram(computer_room, rooms[computer_room]["temp"])
         else:
-            rooms[computer_room].temps = "bg-success"
+            rooms[computer_room]["color"] = "bg-success"
 
         print(rooms)
 
         return "200 - OK"
     
     else:
-        thresholds = {
-            "TEMP_COLD_THRESHOLD": 14,
-            "TEMP_MID_COLD_THRESHOLD": 18,
-            "TEMP_MID_HOT_THRESHOLD": 25,
-            "TEMP_HOT_THRESHOLD": 28,
-        }
-        return render_template("chiller2.html", rooms=rooms,ts=thresholds)
-        """
         return render_template('chiller.html',
                             Labs_temp1=rooms["Labs"]["temp"][0],
                             Labs_temp2=rooms["Labs"]["temp"][1],
@@ -81,7 +56,6 @@ def update_data():
                             Gimel_timestamp=rooms["Gimel"]["timestamp"],
                             Gimel_color=rooms["Gimel"]["color"]
                             )
-                            """
        
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=8080)
+    app.run(host='0.0.0.0', port=8000)
