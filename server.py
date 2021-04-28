@@ -44,7 +44,7 @@ def update_data():
         rooms[computer_room].timestamp = "check-me"
         rooms[computer_room].temps = [float(te) for te in request_data['temp']]
 
-        rooms[computer_room].timestamp = request_data#['timestamp']
+        rooms[computer_room].timestamp = request_data['timestamp']
 
         if any(temp > TEMP_THRESHOLD for temp in rooms[computer_room].temps):
             rooms[computer_room].color = "red"
