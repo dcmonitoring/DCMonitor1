@@ -48,10 +48,10 @@ def update_data():
         rooms[computer_room].timestamp = request_data['timestamp']
 
         if any(temp > TEMP_THRESHOLD for temp in rooms[computer_room].temp):
-            rooms[computer_room].color = "bg-danger"
+            rooms[computer_room].color = "red"
             notify_telegram(computer_room, rooms[computer_room].temp)
         else:
-            rooms[computer_room].temps = "bg-success"
+            rooms[computer_room].temps = "green"
 
         print(rooms)
 
