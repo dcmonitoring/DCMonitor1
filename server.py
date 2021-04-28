@@ -12,7 +12,7 @@ rooms = {"Gimel": {"temp": ["", "", ""], "timestamp": "", "color": ""}, "Labs": 
 
 #notifies telegram on high temps in computer rooms
 def notify_telegram(computer_room, temps):
-    temp_str = ""
+    temps_str = ""
     i = 1
     for temp in temps:
         temps_str += "Sensor" + i + ": " + temp + "\r\n"
