@@ -50,7 +50,7 @@ def update_data():
             rooms[computer_room].color = "red"
             notify_telegram(computer_room, rooms[computer_room].temp)
         else:
-            rooms[computer_room].temps = "green"
+            rooms[computer_room].color = "green"
 
         print(rooms)
 
