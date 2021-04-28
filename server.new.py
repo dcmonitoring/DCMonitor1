@@ -15,12 +15,7 @@ class Room:
         self.timestamp = Timestamp
         self.color = Color
 
-rooms = {
-    "Gimel": Room(),
-    "Labs": Room(),
-    "Messer": Room(),
-    "Sivan": Room(),
-}
+rooms = {}
 
 #rooms = {
 #    "Gimel": {
@@ -42,7 +37,8 @@ def update_data():
     if request.method == 'POST':
         request_data = request.get_json()
         computer_room = request_data['computer_room']
-        
+        if computer_room not in rooms.keys():
+            rooms[computer_room] = Room()
         rooms[computer_room].name = computer_room
         rooms[computer_room].temps = [int(te) for te in request_data['temp']]
         rooms[computer_room].timestamp = request_data['timestamp']
@@ -84,4 +80,4 @@ def update_data():
                             """
        
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000)
+    app.run(host='127.0.0.1', port=8080)
