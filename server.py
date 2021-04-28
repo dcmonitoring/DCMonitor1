@@ -18,7 +18,7 @@ class Room:
 rooms = {
     "Gimel": Room(),
     "Labs": Room(),
-    "Black-Messer": Room(),
+    "Messer": Room(),
     "Sivan": Room(),
 }
 
