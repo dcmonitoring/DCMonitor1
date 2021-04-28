@@ -4,7 +4,7 @@ import requests
 # create the Flask app
 app = Flask(__name__)
 
-TEMP_THRESHOLD = "25"
+TEMP_THRESHOLD = 25
 TELEGRAM_BOT_TOKEN = '1114209977:AAFJg8EbEXg43DRPAC6xg8_mf07sxu2ks8Q'
 CHAT_ID = "gimelm"
 
@@ -18,7 +18,8 @@ class Room:
 rooms = {
     "Gimel": Room(),
     "Labs": Room(),
-    "Messer": Room(),
+    "Black-Messer": Room(),
+    "Sivan": Room(),
 }
 
 #rooms = {
@@ -30,10 +31,10 @@ def notify_telegram(computer_room, temps):
     temp_str = ""
     i = 1
     for temp in temps:
-        temp_str += "Sensor" + i + ": " + temp + "\r\n"
+        temp_str += "Sensor" + str(i) + ": " + str(temp) + "\r\n"
         i += 1
 
-    requests.get("https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendmessage?chat_id=@" + CHAT_ID + "&text=Alert! Temperature in " + computer_room + " is too high:\r\n " + temps_str)
+    requests.get("https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendmessage?chat_id=@" + CHAT_ID + "&text=Alert! Temperature in " + computer_room + " is too high:\r\n " + temp_str)
 
 @app.route('/', methods=['GET', 'POST'])
 def update_data():
@@ -43,7 +44,7 @@ def update_data():
         computer_room = request_data['computer_room']
         
         rooms[computer_room].name = computer_room
-        rooms[computer_room].temps = request_data['temp']
+        rooms[computer_room].temps = [int(te) for te in request_data['temp']]
         rooms[computer_room].timestamp = request_data['timestamp']
 
         if any(temp > TEMP_THRESHOLD for temp in rooms[computer_room].temps):
@@ -83,4 +84,4 @@ def update_data():
                             """
        
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000)
+    app.run(host='127.0.0.1', port=8080)
