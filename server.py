@@ -1,6 +1,7 @@
 # import main Flask class and request object
 from flask import Flask, request, render_template
 import requests
+import pytz
 from datetime import datetime, timedelta
 # create the Flask app
 app = Flask(__name__)
@@ -58,7 +59,7 @@ def update_data():
         try:
             room_last_update = datetime.strptime(
                 request_data['timestamp'], "%a %b %d %H:%M:%S %Y")
-            time_now = datetime.now()
+            time_now = datetime.now(pytz.timezone("Israel"))
             time_delta = time_now - room_last_update
             if time_delta > timedelta(seconds=600):
                 rooms[computer_room].color = "red"
