@@ -45,9 +45,6 @@
                             {% else %}
                             <img src="/static/gauge-med.png" class="gauge-image" >
                             {% endif %}
-                            
-                            
-                            
                             <div class="temp-number">
                                 {{ temp }}
                             </div> 
@@ -56,6 +53,12 @@
                     </div>
                     {% endif %}
 					<div class="temp timestamp m-3"> Last Update: {{ room.timestamp }} </div>
+                    {% if room.time_message != "ok" %}
+                        <div class="time_message m-4">
+                            
+                            <span class="badge badge-pill bg-warning text-dark" id="time_message">Timestamp delay: <br/>{{ room.time_message }}</span>
+                        </div>
+                    {% endif %}
 				</div>
 			</div>
             {% endfor %}
