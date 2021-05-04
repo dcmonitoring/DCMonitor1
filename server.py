@@ -36,7 +36,7 @@ def notify_telegram_temps(computer_room, temps):
 
 def notify_telegram_update(computer_room, timestamp):
     requests.get("https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendmessage?chat_id=@" + CHAT_ID +
-                 "&text=Alert! The agent in" + computer_room + " didn`t send any message in more then 10 minutes.\r\n Last update in" + timestamp)
+                 "&text=Alert! The agent in " + computer_room + " didn`t send any message in more then 10 minutes.\r\n Last update in " + timestamp)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -55,27 +55,25 @@ def update_data():
             notify_telegram_temps(computer_room, rooms[computer_room].temps)
         else:
             rooms[computer_room].color = "green"
-
-        try:
-            room_last_update = datetime.strptime(
-                request_data['timestamp'], "%a %b %d %H:%M:%S %Y")
-            time_now = datetime.now(pytz.timezone("Israel")).replace(tzinfo=None)
-            time_delta = time_now - room_last_update
-            if time_delta > timedelta(seconds=600):
-                rooms[computer_room].color = "red"
-                rooms[computer_room].time_message = "{h} Hours, {m} Minutes and {s} Seconds".format(h=str(time_delta).split(":")[0], m=str(
-                    time_delta).split(":")[1], s=str(time_delta).split(":")[2].split(".")[0])
-                notify_telegram_update(
-                    computer_room, rooms[computer_room].timestamp)
-            else:
-                rooms[computer_room].time_message = "ok"
-        except Exception as excepts:
-            rooms[computer_room].color = "red"
-            print(excepts)
-            if rooms[computer_room].time_message == "ok":
-                rooms[computer_room].time_message = "can't compare timestamps"
-
-        print(rooms)
+        for room in rooms.values():
+            try:
+                room_last_update = datetime.strptime(
+                    room.timestamp, "%a %b %d %H:%M:%S %Y")
+                time_now = datetime.now(pytz.timezone("Israel")).replace(tzinfo=None)
+                time_delta = time_now - room_last_update
+                if time_delta > timedelta(seconds=600):
+                    rooms[room.name].color = "red"
+                    rooms[room.name].time_message = "{h} Hours, {m} Minutes and {s} Seconds".format(h=str(time_delta).split(":")[0], m=str(
+                        time_delta).split(":")[1], s=str(time_delta).split(":")[2].split(".")[0])
+                    notify_telegram_update(
+                        computer_room, rooms[room.name].timestamp)
+                else:
+                    rooms[computer_room].time_message = "ok"
+            except Exception as excepts:
+                rooms[room.name].color = "red"
+                print(excepts)
+                if rooms[room.name].time_message == "ok":
+                    rooms[room.name].time_message = "can't compare timestamps"
 
         return "200 - OK"
 
