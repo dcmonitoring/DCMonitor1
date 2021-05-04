@@ -66,7 +66,7 @@ def update_data():
                     rooms[room.name].time_message = "{h} Hours, {m} Minutes and {s} Seconds".format(h=str(time_delta).split(":")[0], m=str(
                         time_delta).split(":")[1], s=str(time_delta).split(":")[2].split(".")[0])
                     notify_telegram_update(
-                        computer_room, rooms[room.name].timestamp)
+                        room.name, rooms[room.name].timestamp)
                 else:
                     rooms[computer_room].time_message = "ok"
             except Exception as excepts:
