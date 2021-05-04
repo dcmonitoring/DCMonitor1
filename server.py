@@ -36,7 +36,7 @@ def notify_telegram_temps(computer_room, temps):
 
 def notify_telegram_update(computer_room, timestamp):
     requests.get("https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendmessage?chat_id=@" + CHAT_ID +
-                 "&text=Alert! The agent in " + computer_room + " didn`t send any message in more then 10 minutes.\r\n Last update in " + timestamp)
+                 "&text=Alert! The agent in " + computer_room + " didn`t send any message in more than 10 minutes.\r\n Last update in " + timestamp)
 
 
 @app.route('/', methods=['GET', 'POST'])
